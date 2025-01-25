@@ -1,0 +1,84 @@
+class Node {
+    int data;
+    Node next;
+
+    public Node(int data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+
+class Queue {
+    private Node front, rear;
+
+    public Queue() {
+        this.front = this.rear = null;
+    }
+
+    // Enqueue: Add an element to the queue
+    public void enqueue(int data) {
+        Node newNode = new Node(data);
+
+        // If the queue is empty, the new node is both the front and rear
+        if (rear == null) {
+            front = rear = newNode;
+            return;
+        }
+
+        // Add the new node at the end and update rear
+        rear.next = newNode;
+        rear = newNode;
+    }
+
+    // Dequeue: Remove an element from the front of the queue
+    public int dequeue() {
+        if (front == null) {
+            System.out.println("Queue is empty");
+            return -1;
+        }
+
+        int value = front.data;
+        front = front.next;
+
+        // If the front becomes null, set rear to null as well
+        if (front == null) {
+            rear = null;
+        }
+
+        return value;
+    }
+
+    // Display: Print the elements in the queue
+    public void display() {
+        if (front == null) {
+            System.out.println("Queue is empty");
+            return;
+        }
+
+        Node temp = front;
+        System.out.print("Queue: ");
+        while (temp != null) {
+            System.out.print(temp.data + " ");
+            temp = temp.next;
+        }
+        System.out.println();
+    }
+}
+
+public class QueueUsingLinkedList {
+    public static void main(String[] args) {
+        Queue queue = new Queue();
+
+        queue.enqueue(10);
+        queue.enqueue(20);
+        queue.enqueue(30);
+
+        queue.display(); // Output: Queue: 10 20 30
+
+        System.out.println("Dequeued: " + queue.dequeue()); // Output: Dequeued: 10
+        queue.display(); // Output: Queue: 20 30
+
+        queue.enqueue(40);
+        queue.display(); // Output: Queue: 20 30 40
+    }
+}
